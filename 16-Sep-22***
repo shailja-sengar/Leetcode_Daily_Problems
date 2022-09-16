@@ -1,0 +1,8 @@
+Que : Maximum Score from Performing Multiplication Operations,
+Link: https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/
+
+Sol:  Greedy is not suitable in this problem because we have positive and negetive value and after taking some example we found that, we need to take all possible combination
+of answers, that is where recursion and dp comes into picture.
+for further reading take a look onto this link: https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/discuss/2156486/Greedy-Failed-From-Level-Zero-or-Beginner-Friendly-or-Fully-Explained-or-Python-or-C
+
+I'll do later, kuki abhi dp ka d bhi nhi aata :(
