@@ -1,0 +1,76 @@
+Reference link: https://leetcode.com/problems/palindrome-pairs/discuss/2585819/(Left-%2B-Mid-%2B-Right)-Palindrome-oror-Easy-to-Understand-oror-C%2B%2B-code
+
+class Solution {
+public:
+    
+    bool isPalindrome(string & word, int start, int end){
+        while(start < end){
+            if(word[start] != word[end]) return false;
+            start++, end--;
+        }
+        return true;
+    }
+    
+    vector<vector<int>> palindromePairs(vector<string>& words) {
+        unordered_map<string, int>ump;
+        vector<vector<int>>ans;
+        int emptyIndex = -1;       //to store the empty string
+        vector<int>indexOfPalindrome;      //to stor all the palindrome words index bcoz each empty string will make a palindrome, with palindrome string
+        
+        for(int i=0; i<words.size(); i++){
+            //to handle empty string case
+            if(words[i] == ""){
+                emptyIndex = i;
+                continue;
+            }
+            else{
+                if(isPalindrome(words[i], 0, words[i].size()-1)){
+                    indexOfPalindrome.push_back(i);
+                }
+                //store the reverse of each word in map, this help in further 
+                string s = words[i];
+                reverse(begin(s), end(s));
+                ump[s] = i;
+            }
+        }
+        
+        for(int i=0; i<words.size(); i++){
+            for(int part=0; part<words[i].size(); part++){
+                //case 1: if current word has left + mid
+                //if it is, need to find whether mid is palindrome or not
+                //if it is, then need to search right part, which is reverse of left
+                //Left part = [0, part-1]
+                //Mid = [part, words[i].size()-1]
+                if(isPalindrome(words[i], part, words[i].size()-1)){
+                    string right = words[i].substr(0, part);      //basically we will find the reverse of left, which is already store in map and substr take [)
+                    if(ump.find(right) != ump.end() && ump[right] != i){
+                        ans.push_back({i, ump[right]});
+                    }
+                }
+                
+                //case 2: if current word has right + mid
+                //if it is, need to check whether mid is palindrome or not
+                //if it is, search the left part in map
+                //Mid = [0, part-1]
+                //Right = [part, words[i].size()-1]
+                
+                if(isPalindrome(words[i], 0, part-1)){
+                    string left = words[i].substr(part, words[i].size());
+                    if(ump.find(left) != ump.end() && ump[left] != i){
+                        ans.push_back({ump[left], i});
+                    }
+                }
+            }
+        }
+        
+        //in last if empty string us present, store all the combination with palindrome index
+        if(emptyIndex != -1){
+            for(auto i : indexOfPalindrome){
+                ans.push_back({i, emptyIndex});
+                ans.push_back({emptyIndex, i});
+            }
+        }
+        
+        return ans;
+    }
+};
