@@ -1,0 +1,38 @@
+Que : Trapping Rain Water
+Link : https://leetcode.com/problems/trapping-rain-water/
+
+Sol:
+//best : using 2 pointer, better : using prefix and suffix sum
+class Solution {
+public:
+    //best
+    int trap(vector<int>& height) {
+        int ans = 0;
+        int left = 0, right = height.size()-1;
+        int leftMax = 0, rightMax=0;
+        
+        while(left <= right){
+            //finding the maximum building on the left side
+            if(height[left] <= height[right]){
+                if(height[left] >= leftMax){      //found the maximum height's building, update 
+                    leftMax = height[left];
+                }
+                else{
+                    ans += (leftMax - height[left]);     //store only when we have already maximum building on the left side and current building's height is smaller
+                }
+                left++;
+            }
+            //finding the rightmost maximum building
+            else{
+                if(height[right] >= rightMax){
+                    rightMax = height[right];
+                }
+                else{
+                    ans += (rightMax - height[right]);
+                }
+                right--;
+            }
+        }
+        return ans;
+    }
+};
