@@ -12,7 +12,7 @@ public:
         else if(pos == s.size()-1) return 1;
         
         //if current i has 1 or 2 (if i =2 then i+1 should be from 0 to 6 only)then we have 2 option to choice the reaming string in 2 ways whether take only one char or take 2 char and process remainig chars
-        else if(s[pos] == '1' || s[pos] == '2' && (s[pos+1] >= 48 || s[pos+1] <= 54))
+        else if(s[pos] == '1' || s[pos] == '2' && (s[pos+1] >= 48 && s[pos+1] <= 54))
             return numOfWaysDecode(pos+1, s) + numOfWaysDecode(pos+2, s);
         
         //else we have to choose only one char and process remining chars
