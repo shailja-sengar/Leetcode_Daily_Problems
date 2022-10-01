@@ -1,0 +1,28 @@
+//Using recusrion : give tle, further use dp
+class Solution {
+public:
+    int numOfWaysDecode(int pos, string &s){
+        //Edge: pos reach at size or greater than size then that string can be decoded, eg. 10
+        if(pos >= s.size()) return 1;
+        
+        //Edge: if i is less than size and i point out to zero then zero can't be decoded
+        else if(s[pos] == '0') return 0;
+        
+        //Edge: 
+        else if(pos == s.size()-1) return 1;
+        
+        //if current i has 1 or 2 (if i =2 then i+1 should be from 0 to 6 only)then we have 2 option to choice the reaming string in 2 ways whether take only one char or take 2 char and process remainig chars
+        else if(s[pos] == '1' || s[pos] == '2' && (s[pos+1] >= 48 || s[pos+1] <= 54))
+            return numOfWaysDecode(pos+1, s) + numOfWaysDecode(pos+2, s);
+        
+        //else we have to choose only one char and process remining chars
+        else
+            return numOfWaysDecode(pos+1, s);
+    }
+   int numDecodings(string s) {
+        int ans = 0;
+       ans = numOfWaysDecode(0, s);
+       return ans;
+    }
+    
+};
