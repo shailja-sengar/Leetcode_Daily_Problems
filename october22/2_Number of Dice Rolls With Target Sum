@@ -1,0 +1,25 @@
+//Using Recusrion : give tle so dp will help 
+class Solution {
+public:
+    
+    int helper(int n, int k, int target){
+        //base case: when dice is not available and target gets 0 it means we have made the desired target so return 1 as a count
+        if(n == 0){
+            if(target == 0) return 1;
+            return 0;
+        }
+        
+        int sum = 0;
+        
+        //try all the face of each dice
+        for(int i=1; i<=k; i++){
+            sum += helper(n-1, k, target-i);    //after choosing one face for current dice, move to next dice and also decrease the target as we have taken one face for one dice and store the ans 
+        }
+        return sum;
+    }
+    int numRollsToTarget(int n, int k, int target) {
+        int ans = 0;
+        ans = helper(n, k, target);
+        return ans;
+    }
+};
