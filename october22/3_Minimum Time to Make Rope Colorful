@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minCost(string colors, vector<int>& neededTime) {
+        int time = 0;
+        int i=0, j=1;
+        
+        while(j<colors.size()){
+            //when two contigous same color
+            if(colors[i] == colors[j]){
+                //select whichever has less value than the other
+                if(neededTime[i] < neededTime[j]){
+                    time += neededTime[i];
+                    i=j;                  
+                }
+                else
+                    time += neededTime[j];
+            }
+            else
+                i = j;
+            j++;
+        }
+        return time;
+    }
+};
