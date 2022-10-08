@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        //Step1: sort the array
+        sort(nums.begin(), nums.end());
+        
+        //Step2: fix the first pointer and find reamining two elements and return that ans which has the minimum difference from the target
+        int ans = 0;
+        int diff = INT_MAX;
+        for(int first=0; first<nums.size()-2; first++){
+            int second = first+1, third = nums.size()-1;
+            while(second < third){
+                int currSum = nums[first] + nums[second] + nums[third];
+                int currDiff = abs(target - currSum);
+                
+                //if we get minimum difference from previously calculated diff
+                if(currDiff < diff){
+                    ans = currSum;
+                    diff = currDiff;
+                }
+                
+                //to move the second and third pointer check the currSum is lesser than or grater than the target
+                if(currSum < target) second++;
+                
+                else if(currSum > target) third--;
+                else{
+                    ans = currSum;      //when we got our sum is equal to target then no need to further calculation bcoz we have sorted array so after this we'll get sum greater than the target
+                    first = nums.size()-2;
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+};
