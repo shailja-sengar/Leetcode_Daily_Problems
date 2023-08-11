@@ -1,0 +1,45 @@
+518. Coin Change II
+
+class Solution {
+public:
+    /*int helper(int amount, vector<int>&coins, int ind, int n){
+        if(ind < 0)
+            return 0;
+        
+        if(amount == 0)
+            return 1;
+        
+        int notPick = 0 + helper(amount, coins, ind-1, n);
+        int pick = 0;
+        if(coins[ind] <= amount)
+            pick =  helper(amount - coins[ind], coins, ind, n);
+
+        return notPick + pick;
+    }*/
+
+    int helper(int amount, vector<int>&coins, int ind, int n, vector<vector<int>>&dp){
+        if(ind < 0)
+            return 0;
+        
+        if(amount == 0)
+            return 1;
+        
+        if(dp[ind][amount] != -1)
+            return dp[ind][amount];
+        
+        int notPick = helper(amount, coins, ind-1, n, dp);
+        int pick = 0;
+        if(coins[ind] <= amount)
+            pick = helper(amount-coins[ind], coins, ind, n, dp);
+        
+        return dp[ind][amount] = (notPick + pick);
+    }
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+        //reursion
+        //return helper(amount, coins, n-1, n);
+
+        vector<vector<int>>dp(n+1, vector<int>(amount+1, -1));
+        return helper(amount, coins, n-1, n, dp);
+    }
+};
